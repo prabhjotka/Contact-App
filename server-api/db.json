@@ -1,0 +1,19 @@
+{
+  "contacts": [
+    {
+      "id": "contact_1702616963400",
+      "name": "prabh",
+      "email": "sam@gmail.com"
+    },
+    {
+      "id": "contact_1702673243714",
+      "name": "sam",
+      "email": "abcd@gmail.com"
+    },
+    {
+      "id": "contact_1702673251637",
+      "name": "kimi",
+      "email": "bmw@gmail.com"
+    }
+  ]
+}

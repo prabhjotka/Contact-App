@@ -5,20 +5,47 @@ import AddContact from "./AddContact";
 import ContactList from "./ContactList";
 import ContactDetails from "./ContactDetails";
 import { useState, useEffect } from "react";
+import api from '../api/contact';
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import EditContact from "./EditContact";
+
 function App() {
   const LOCAL_STROAGE_KEY = "Contacts"
   const [contacts, setContacts] = useState([]);
+
+  const reteriveContacts=async ()=>
+  {
+    const response=await api.get("/contacts");
+    return response.data;
+  }
   const generateUniqueId = () => {
     const prefix = 'contact_';
     const timestamp = Date.now();
     return `${prefix}${timestamp}`;
   };
-  const contactHandler = function(contact) {
+  const updateContactHandler=async function(contact)
+  {
+   
+    
+    const response=await api.put(`/contacts/${contact.id}`,contact)
+    const{id,name,email}=response.data; 
+    setContacts(contacts.map((contact)=>{
+      return contact.id==id ?{...response.data}:contact;
+     }));
+      
+  }
+  const contactHandler = async function(contact) {
 
-    setContacts([...contacts, { id: generateUniqueId(), ...contact }]);
+    const request={
+      id: generateUniqueId(),
+      ...contact
+    }
+    const response=await api.post("/contacts",request)
+    setContacts([...contacts, response.data]);
   };
-  const removeContact = function(id) {
+
+  const removeContact = async function(id) {
+    await api.delete(`/contacts/${id}`)
     const newContactList = contacts.filter((contact) => {
       return contact.id != id;
     });
@@ -26,9 +53,13 @@ function App() {
   }
 
   useEffect(() => {
-    const getContacts = JSON.parse(localStorage.getItem(LOCAL_STROAGE_KEY));
-    if (getContacts) setContacts(getContacts);
-
+    // const getContacts = JSON.parse(localStorage.getItem(LOCAL_STROAGE_KEY));
+    // if (getContacts) setContacts(getContacts);
+    const getAllContacts=async()=>{
+      const allContact=await reteriveContacts();
+      if(allContact)setContacts(allContact);
+    };
+    getAllContacts();
   }, []);
 
   useEffect(() => {
@@ -45,6 +76,7 @@ function App() {
             contacts={contacts}
             getContactid={removeContact}
           />} />
+           <Route path="/edit" element={<EditContact updateContactHandler={updateContactHandler} />} />
           <Route path="/Contact/:id" element={<ContactDetails/>}/>
       </Routes>
 

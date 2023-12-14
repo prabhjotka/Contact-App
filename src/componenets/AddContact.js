@@ -39,7 +39,7 @@ const AddContact=function({contactHandler})
                 value={state.email}
                 onChange={(e)=>setState({...state,email:e.target.value})}/>
             </div>
-            <button className="ui button blue">Submit</button>
+            <button className="ui button blue">Add</button>
 
 
 
