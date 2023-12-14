@@ -7,16 +7,17 @@ const ContactList = function(props) {
         props.getContactid(id);
     }
 
-    const renderList = props.contacts.map((contact) => {
+    const renderList = props.contacts.map((contact,index) => {
         return (
             <ContactCard
+                key={index}
                 contacts={contact}
                 clickHandler={deleteContact}
             />
         );
     });
     return (
-        <div class="main">
+        <div className="main">
             <h2>Contact List</h2>
             <Link to="/add">
                 <button className="ui button blue right">Add Contact</button>

@@ -1,17 +1,20 @@
 import React from "react";
-import user from '../images/user.png';
-const ContactDetails = function() {
+import userFull from '../images/userFull.jpg';
+import { useLocation } from 'react-router-dom'
+const ContactDetails = function(props) {
+    const location = useLocation()
+    const { name,email} = location.state.contact
     return (
         <div className="main">
             <div className="ui card centered">
                 <div className="image">
-                    <image src={user} alt="user" />
+                    <img src={userFull} alt="user" />
                 </div>
                 <div className="content">
                     <div className="header">
-                        Dippeash</div>
+                        {name}</div>
                     <div className="description">
-                        cs@gmail.com
+                       {email}
                     </div>
                 </div>
             </div>

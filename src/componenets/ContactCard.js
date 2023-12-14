@@ -9,7 +9,8 @@ const ContactCard=function(props)
             <img className="ui avatar image" src={user} alt="user"/>
             <div className="content">
            <div className="header">
-           <Link to={`/contact/${id}`}> {name}</Link> 
+       
+           <Link to={`/contact/${id}`} state={{contact:props.contacts}}> {name}</Link> 
                
             </div>
             <div><Link to=""> {email}</Link> </div>
